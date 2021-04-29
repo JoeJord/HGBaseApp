@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/SFA_LvList"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1.12" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/SFA_LabelNewFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filename_new" />
+
+    <EditText
+        android:id="@+id/SFA_TxtFileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/SFA_BtnCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+        	android:background="@drawable/border"
+            android:text="@string/button_cancel" />
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/SFA_BtnOK"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+        	android:background="@drawable/border"
+            android:text="@string/button_ok" />
+    </LinearLayout>
+        
+</LinearLayout>

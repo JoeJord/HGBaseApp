@@ -1,0 +1,28 @@
+<resources>
+
+    <string name="empty"></string>
+    <string name="app_name">HGBase</string>
+    <string name="infoUrl">http://www.hagru.at</string>
+    <string name="infoCopyright">Copyright (&#169;) 2016 by Harald Gruber</string>
+    <string name="version">Version</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_on">Ein</string>
+    <string name="button_off">Aus</string>
+    <string name="button_save">Speichern</string>
+    <string name="button_delete">L&#246;schen</string>
+    <string name="error">Fehler</string>
+    <string name="error_permission">Berechtigung \'%s\' nicht erteilt!</string>
+    <string name="action_preferences">Einstellungen</string>
+    <string name="action_help">Hilfe</string>
+    <string name="action_about">&#220;ber</string>
+    <string name="action_share">Teilen</string>
+    <string name="file_open">Datei &#246;ffnen</string>
+    <string name="file_save">Datei speichern</string>
+    <string name="filename_new">Neuer Dateiname:</string>
+    <string name="filename_invalid">Ung&#252;ltiger Dateiname!</string>
+    <string name="select_color">Farbe ausw&#228;hlen</string>
+    <string name="select_no_color">Keine Farbe</string>
+    <string name="progress_wait">Bitte warten&#8230;</string>
+    
+</resources>

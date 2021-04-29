@@ -1,0 +1,2 @@
+include ':HGBaseApp'
+rootProject.name = "HGBaseApp"

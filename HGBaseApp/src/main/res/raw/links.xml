@@ -1,0 +1,4 @@
+<links>
+    <!-- <link name="Paypal" url="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=LFTBGHTHUVB58&amp;lc=AT&amp;item_name=tjger&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" icon="paypal"/>-->
+    <link name="Sourceforge" url="https://sourceforge.net/projects/hgbase/" icon="sourceforge"/>   
+</links>

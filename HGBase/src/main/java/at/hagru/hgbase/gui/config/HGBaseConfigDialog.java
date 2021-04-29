@@ -45,7 +45,7 @@ public abstract class HGBaseConfigDialog extends PreferenceActivity {
 	 * Shows the preference activity in style of a configuration dialog.
 	 * 
 	 * @param callingActivity the activity that calls the dialog
-	 * @param dialog the dialog class to display, i.e. a subclass of this class
+	 * @param dialogClass the dialog class to display, i.e. a subclass of this class
 	 */
 	public static void show(Activity callingActivity, Class<? extends HGBaseConfigDialog> dialogClass) {
 		show(callingActivity, dialogClass, -1);
@@ -55,8 +55,8 @@ public abstract class HGBaseConfigDialog extends PreferenceActivity {
 	 * Shows the preference activity in style of a configuration dialog.
 	 * 
 	 * @param callingActivity the activity that calls the dialog
+   * @param dialogClass the dialog to display, i.e. a subclass of this class
 	 * @param requestCode the code to react in the calling activity (@link requestCode#onActivityResult(int, int, Intent)}
-	 * @param dialog the dialog to display, i.e. a subclass of this class
 	 */
 	public static void show(Activity callingActivity, Class<? extends HGBaseConfigDialog> dialogClass, int requestCode) {
 	    HGBaseAppTools.startActivityForResult(callingActivity, dialogClass, requestCode);
@@ -78,7 +78,6 @@ public abstract class HGBaseConfigDialog extends PreferenceActivity {
     /**
      * Adds a preference to the dialog.
      * 
-     * @param activity the preference activity
      * @param pref the preference to add
      */
     protected void addPreference(Preference pref) {

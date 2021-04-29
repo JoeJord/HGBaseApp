@@ -66,7 +66,7 @@ public final class HGBaseConfig {
     /**
      * Returns the given text option
      *
-     * @param set key of text option
+     * @param key key of text option
      * @param defaultValue default value
      * @return text option
      */
@@ -77,7 +77,7 @@ public final class HGBaseConfig {
     /**
      * Returns the given text option as set of strings.
      *
-     * @param set key of text option
+     * @param key key of text option
      * @return text option as set of strings.
      */
     public static Set<String> getStrings(String key) {
@@ -87,7 +87,7 @@ public final class HGBaseConfig {
     /**
      * Returns the given text option as set of strings.
      *
-     * @param set key of text option
+     * @param key key of text option
      * @param defaultValues default values
      * @return text option as set of strings.
      */
@@ -98,7 +98,7 @@ public final class HGBaseConfig {
     /**
      * Returns the given text option as integer
      *
-     * @param set key of text option
+     * @param key key of text option
      * @return text option as integer
      */
     public static int getInt(String key) {
@@ -108,7 +108,7 @@ public final class HGBaseConfig {
     /**
      * Returns the given text option as integer
      *
-     * @param set key of text option
+     * @param key key of text option
      * @param defaultValue default value
      * @return text option as integer
      */

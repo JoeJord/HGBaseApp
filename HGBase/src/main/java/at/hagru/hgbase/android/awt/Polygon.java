@@ -27,7 +27,7 @@ public class Polygon {
      * <code>Polygon</code> without re-creating this array. The value of {@link #npoints npoints} is equal to
      * the number of valid points in this <code>Polygon</code>.
      */
-    public int xpoints[];
+    public int[] xpoints;
 
     /**
      * The array of Y coordinates. The number of elements in this array might be more than the number of Y
@@ -35,7 +35,7 @@ public class Polygon {
      * <code>Polygon</code> without re-creating this array. The value of <code>npoints</code> is equal to the
      * number of valid points in this <code>Polygon</code>.
      */
-    public int ypoints[];
+    public int[] ypoints;
 
     /**
      * The bounds of this {@code Polygon}. This value can be null.
@@ -66,7 +66,7 @@ public class Polygon {
      *             <code>xpoints</code> or the length of <code>ypoints</code>.
      * @throws NullPointerException if <code>xpoints</code> or <code>ypoints</code> is <code>null</code>.
      */
-    public Polygon(int xpoints[], int ypoints[], int npoints) {
+    public Polygon(int[] xpoints, int[] ypoints, int npoints) {
         if (npoints > xpoints.length || npoints > ypoints.length) {
             throw new IndexOutOfBoundsException("npoints > xpoints.length || " + "npoints > ypoints.length");
         }
@@ -82,11 +82,11 @@ public class Polygon {
      * Calculates the bounding box of the points passed to the constructor. Sets <code>bounds</code> to the
      * result.
      * 
-     * @param xpoints[] array of <i>x</i> coordinates
-     * @param ypoints[] array of <i>y</i> coordinates
+     * @param xpoints array of <i>x</i> coordinates
+     * @param ypoints array of <i>y</i> coordinates
      * @param npoints the total number of points
      */
-    void calculateBounds(int xpoints[], int ypoints[], int npoints) {
+    void calculateBounds(int[] xpoints, int[] ypoints, int npoints) {
         int boundsMinX = Integer.MAX_VALUE;
         int boundsMinY = Integer.MAX_VALUE;
         int boundsMaxX = Integer.MIN_VALUE;
@@ -181,7 +181,6 @@ public class Polygon {
      * @param p the specified <code>Point</code> to be tested
      * @return <code>true</code> if the <code>Polygon</code> contains the <code>Point</code>;
      *         <code>false</code> otherwise.
-     * @see #contains(double, double)
      */
     public boolean contains(Point p) {
         return contains(p.x, p.y);
@@ -195,7 +194,6 @@ public class Polygon {
      * @param y the specified Y coordinate to be tested
      * @return {@code true} if this {@code Polygon} contains the specified coordinates {@code (x,y)};
      *         {@code false} otherwise.
-     * @see #contains(double, double)
      */
     public boolean contains(int x, int y) {
         if (npoints <= 2 || !getBounds().contains(x, y)) {

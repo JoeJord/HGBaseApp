@@ -78,7 +78,7 @@ public final class HGBaseFileTools {
     /**
      * Return the extension of the file name
      * 
-     * @param f a file object
+     * @param filename the filename
      * @return extension
      */
     public static String getFileExtension(String filename) {

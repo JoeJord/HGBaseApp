@@ -15,7 +15,7 @@ public abstract class AbstractMenuAction implements IMenuAction {
     /**
      * Create a new menu actions that has access to the activity that shows the menu.
      * 
-     * @param menuActivity
+     * @param activity
      */
     protected AbstractMenuAction(HGBaseActivity activity) {
         this.activity = activity;

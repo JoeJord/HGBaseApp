@@ -143,7 +143,6 @@ public class HGBaseMultiTextPanel extends LinearLayout {
     }
 
 	/**
-	 * @param activity the activity
 	 * @param panels the widths of the panels
 	 * @return the size of the center panel, i.e., the remaining space
 	 */

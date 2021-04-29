@@ -687,7 +687,7 @@ public class HGBaseGuiTools {
      * Checks if the given view has any (direct or indirect) parent of the given type.
      * 
      * @param view the view to test
-     * @param typeName the simple class name for that the parent is tested
+     * @param className the simple class name for that the parent is tested
      * @return true if any parent of the given view has the given type
      */
     public static boolean hasViewAnyParentOfType(View view, String className) {
@@ -748,9 +748,9 @@ public class HGBaseGuiTools {
     /**
      * Checks whether the given class is of correct type.
      * 
-     * @param T the type of the object to check
+     * @param <T> the type of the object to check
      */
-    public static interface ClassTypeChecker<T> {
+	public static interface ClassTypeChecker<T> {
     	
     	public boolean isCorrectType(Class<?> classType, T checkObject);    	
     }

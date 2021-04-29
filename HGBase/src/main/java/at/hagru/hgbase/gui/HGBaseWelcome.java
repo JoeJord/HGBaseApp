@@ -58,7 +58,7 @@ public class HGBaseWelcome {
     /**
      * Creates a plain dialog depending on the hieght of the title bar.
      * 
-     * @param the activity related to the dialog
+     * @param activity the activity related to the dialog
      * @param titleBarHeight the height of the title bar, is 0 if there is none visible
      * @return the dialog
      */
@@ -135,7 +135,7 @@ public class HGBaseWelcome {
      * @param activity the main activity
      * @param imageId the id of the image to display
      * @param fitToHeight true to fit to height, and define the widht as fixed or false to fit for width (the default)
-     * @param heightOrWidht the height (fitToHeight=false) or width (fitToHeight=true) of the image 
+     * @param heightOrWidth the height (fitToHeight=false) or width (fitToHeight=true) of the image
      * @return the image view with the given image
      */
     protected static ImageView createImageView(Activity activity, int imageId, boolean fitToHeight, int heightOrWidth) {

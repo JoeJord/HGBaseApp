@@ -148,7 +148,7 @@ public final class HGBaseDialog {
      * Shows an error dialog.
      *
      * @param activity determines the activity in which the dialog is displayed
-     * @param messageId the error message to display
+     * @param message the error message to display
      */
     public static void showErrorDialog(Activity activity, String message) {
     	showErrorDialog(activity, message, new DialogOnClickCloseListener());
@@ -158,7 +158,7 @@ public final class HGBaseDialog {
      * Shows an error dialog.
      *
      * @param activity determines the activity in which the dialog is displayed
-     * @param messageId the error message to display
+     * @param message the error message to display
      * @param okListener the listener when pressing ok
      */
     public static void showErrorDialog(Activity activity, String message, OnClickListener okListener) {
@@ -260,7 +260,6 @@ public final class HGBaseDialog {
      * Displays a simple dialog with an ok and a cancel button.
      *
      * @param activity determines the activity in which the dialog is displayed
-     * @param dlg the alert dialog to be used
      * @param view the Object to display
      * @param title the title string for the dialog
      * @param okListener the listener to do the action on ok
@@ -392,7 +391,7 @@ public final class HGBaseDialog {
      * Shows an HTML page as dialog.
      * 
      * @param activity the activity to start the dialog from
-     * @param htmlText the HTML coded text
+     * @param htmlFile the HTML file
      * @param title the title of the dialog
      * @return the new created dialog
      */

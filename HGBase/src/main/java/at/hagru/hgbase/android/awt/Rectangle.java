@@ -120,10 +120,8 @@ public class Rectangle {
     /**
      * Create a new rectangle with the specified coordinates. Note: no range checking is performed, so the caller must ensure that left <= right and top <= bottom.
      * 
-     * @param left The X coordinate of the left side of the rectangle.
-     * @param top The Y coordinate of the top of the rectangle.
-     * @param right The X coordinate of the right side of the rectangle.
-     * @param bottom The Y coordinate of the bottom of the rectangle.
+     * @param upperLeft The upper left corner.
+     * @param lowerRight The lower right corner.
      */
     public Rectangle(Point upperLeft, Point lowerRight) {
 	this(upperLeft.x, upperLeft.y, lowerRight.x - upperLeft.x, lowerRight.y - upperLeft.y);
@@ -244,8 +242,8 @@ public class Rectangle {
      * Checks whether or not this <code>Rectangle</code> contains the point at the specified location
      * {@code (x,y)}.
      *
-     * @param x the specified X coordinate
-     * @param y the specified Y coordinate
+     * @param X the specified X coordinate
+     * @param Y the specified Y coordinate
      * @return <code>true</code> if the point {@code (x,y)} is inside this <code>Rectangle</code>;
      *         <code>false</code> otherwise.
      */

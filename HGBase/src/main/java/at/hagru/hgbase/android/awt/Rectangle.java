@@ -330,4 +330,18 @@ public class Rectangle {
         x += diffX;
         y += diffY;
     }
+
+    /**
+     * Checks whether or not the specified {@code Rectangle} contains the specified {@code Point}.
+     *
+     * @param rect The {@code Rectangle} to test.
+     * @param p    The {@code Point} to test.
+     * @return {@code true} if the specified {@code Point} is inside the specified {@code Rectangle}; {@code false} otherwise.
+     */
+    public static boolean contains(Rectangle rect, Point p) {
+        if ((rect == null) || (p == null)) {
+            return false;
+        }
+        return rect.contains(p);
+    }
 }

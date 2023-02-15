@@ -344,4 +344,40 @@ public class Rectangle {
         }
         return rect.contains(p);
     }
+
+    /**
+     * Returns the center position of this rectangle.
+     *
+     * @return The center position of this rectangle.
+     */
+    public Point getCenter() {
+        return new Point(x + (width/2), y + (height/2));
+    }
+
+    /**
+     * Returns the diagonal of this rectangle.
+     *
+     * @return The diagonal of this rectangle.
+     */
+    public double getDiagonal() {
+        return Math.sqrt(((width * width) + (height * height)));
+    }
+
+    /**
+     * Returns the inscribed circle of this rectangle.
+     *
+     * @return The inscribed circle of this rectangle.
+     */
+    public Circle getInscribedCircle() {
+        return new Circle(getCenter(), Math.min(width, height)/2);
+    }
+
+    /**
+     * Returns the circumscribed circle of this rectangle.
+     *
+     * @return The circumscribed circle of this rectangle.
+     */
+    public Circle getCircumscribedCircle() {
+        return new Circle(getCenter(), (int) (getDiagonal() / 2));
+    }
 }

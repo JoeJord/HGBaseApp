@@ -217,14 +217,15 @@ final public class HGBaseConfigTools {
     /**
      * Creates a preference object for entering a number.
      *
-     * @param activity     The preference activity.
-     * @param key          The key of the new preference.
-     * @param defaultValue The default value.
-     * @param maxDigits    The maximum number of digits that can be entered.
+     * @param activity         The preference activity.
+     * @param key              The key of the new preference.
+     * @param defaultValue     The default value.
+     * @param maxDigits        The maximum number of digits that can be entered.
+     * @param showEnteredValue If {@code true}, the selected value will be shown in the summary.
      * @return The new created preference.
      */
-    public static EditTextPreference createEditNumberPreference(PreferenceActivity activity, String key, int defaultValue, int maxDigits) {
-        EditTextPreference preference = createTextPreference(activity, key, String.valueOf(defaultValue));
+    public static EditTextPreference createEditNumberPreference(PreferenceActivity activity, String key, int defaultValue, int maxDigits, boolean showEnteredValue) {
+        EditTextPreference preference = createTextPreference(activity, key, String.valueOf(defaultValue), true, showEnteredValue);
         EditText edit = preference.getEditText();
         edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         edit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxDigits)});

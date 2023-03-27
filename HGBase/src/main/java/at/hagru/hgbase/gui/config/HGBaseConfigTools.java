@@ -7,7 +7,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.SwitchPreference;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
+import android.widget.EditText;
 
 import at.hagru.hgbase.android.awt.Color;
 import at.hagru.hgbase.gui.HGBaseGuiTools;
@@ -209,6 +212,23 @@ final public class HGBaseConfigTools {
             values[i - min] = String.valueOf(i);
         }
         return createListPreference(activity, key, values, String.valueOf(defaultValue));
+    }
+
+    /**
+     * Creates a preference object for entering a number.
+     *
+     * @param activity The preference activity.
+     * @param key  The key of the new preference.
+     * @param defaultValue The default value.
+     * @param maxDigits The maximum number of digits that can be entered.
+     * @return The new created preference.
+     */
+    public static EditTextPreference createEditNumberPreference(PreferenceActivity activity, String key, int defaultValue, int maxDigits) {
+        EditTextPreference preference = createTextPreference(activity, key, String.valueOf(defaultValue));
+        EditText edit = preference.getEditText();
+        edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        edit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxDigits)});
+        return preference;
     }
 
     /**

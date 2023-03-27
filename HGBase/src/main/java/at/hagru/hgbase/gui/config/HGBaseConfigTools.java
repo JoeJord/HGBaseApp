@@ -217,10 +217,10 @@ final public class HGBaseConfigTools {
     /**
      * Creates a preference object for entering a number.
      *
-     * @param activity The preference activity.
-     * @param key  The key of the new preference.
+     * @param activity     The preference activity.
+     * @param key          The key of the new preference.
      * @param defaultValue The default value.
-     * @param maxDigits The maximum number of digits that can be entered.
+     * @param maxDigits    The maximum number of digits that can be entered.
      * @return The new created preference.
      */
     public static EditTextPreference createEditNumberPreference(PreferenceActivity activity, String key, int defaultValue, int maxDigits) {

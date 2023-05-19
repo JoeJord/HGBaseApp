@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference android:defaultValue="Test" android:key="config_name" android:title="@string/config_name"/>
+
+</PreferenceScreen>

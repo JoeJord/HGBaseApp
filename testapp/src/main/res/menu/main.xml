@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="at.hagru.hgbasetest.MainActivity" >
+    
+    <item
+        android:id="@+id/action_start_progress"
+        android:title="@string/action_start_progress"/>
+    
+    <item 
+        android:id="@+id/action_preferences" 
+        android:title="@string/action_preferences"
+        android:icon="@drawable/preferences"
+        android:showAsAction="ifRoom"/>    
+
+    <item 
+        android:id="@+id/action_about" 
+        android:title="@string/action_about"
+        android:icon="@drawable/about"
+        android:showAsAction="ifRoom"/>
+
+    <item 
+        android:id="@+id/config_dialog" 
+        android:title="@string/config_dialog"/>
+    
+    <item 
+        android:id="@+id/color_dialog" 
+        android:title="@string/color_dialog"/>
+    
+</menu>

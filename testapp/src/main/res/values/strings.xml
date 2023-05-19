@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HGBaseTestApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="action_start_progress">Start Progress</string>
+    <string name="config_dialog">Config Dialog</string>
+    <string name="config_name">Name for HGBaseTestApp</string>
+    <string name="config_number">A number for HGBaseTestApp</string>
+    <string name="config_color">Colorize HGBaseTestApp</string>
+    <string name="config_value">A number slider</string>
+    <string name="config_picker">A number picker</string>
+    <string name="config_onoff">Switch on and off</string>
+    <string name="color_dialog">Color Dialog</string>
+    
+</resources>

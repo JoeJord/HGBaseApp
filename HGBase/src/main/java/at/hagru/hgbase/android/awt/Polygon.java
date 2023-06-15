@@ -257,10 +257,23 @@ public class Polygon {
 
         return ((hits & 1) != 0);
     }
-    
+
+    /**
+     * Returns {@code true} if the specified rectangle lies completely within this polygon.
+     *
+     * @param rectangle The rectangle to check.
+     * @return {@code true} if the specified rectangle lies completely within this polygon.
+     */
+    public boolean contains(Rectangle rectangle) {
+        if (rectangle == null) {
+            return false;
+        }
+        return contains(rectangle.getUpperLeft()) && contains(rectangle.getUpperRight()) && contains(rectangle.getLowerLeft()) && contains(rectangle.getLowerRight());
+    }
+
     @Override
     public String toString() {
-        return getClass().getName() + " x = " + Arrays.asList(HGBaseTools.toIntegerArray(xpoints)) 
-        						    + ", y = " + Arrays.asList(HGBaseTools.toIntegerArray(ypoints));
+        return getClass().getName() + " x = " + Arrays.asList(HGBaseTools.toIntegerArray(xpoints))
+                                    + ", y = " + Arrays.asList(HGBaseTools.toIntegerArray(ypoints));
     }
 }

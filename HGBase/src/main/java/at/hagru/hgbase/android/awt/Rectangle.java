@@ -164,18 +164,34 @@ public class Rectangle {
     }
 
     /**
-     * Returns the X coordinate of the lower-right corner of this {@code Rectangle}.
+     * Returns the X coordinate of the left side of this {@code Rectangle}.
      *
-     * @return The X coordinate of the lower-right corner of this {@code Rectangle}.
+     * @return The X coordinate of the left side of this {@code Rectangle}.
+     */
+    public int getLeft() {
+        return x;
+    }
+    /**
+     * Returns the X coordinate of the right side of this {@code Rectangle}.
+     *
+     * @return The X coordinate of the right side of this {@code Rectangle}.
      */
     public int getRight() {
         return x + width;
     }
 
     /**
-     * Returns the Y coordinate of the lower-right corner of this {@code Rectangle}.
+     * Returns the Y coordinate of the upper side of this {@code Rectangle}.
      *
-     * @return The Y coordinate of the lower-right corner of this {@code Rectangle}.
+     * @return The Y coordinate of the upper side of this {@code Rectangle}.
+     */
+    public int getTop() {
+        return y;
+    }
+    /**
+     * Returns the Y coordinate of the lower side corner of this {@code Rectangle}.
+     *
+     * @return The Y coordinate of the lower side corner of this {@code Rectangle}.
      */
     public int getBottom() {
         return y + height;
@@ -185,7 +201,7 @@ public class Rectangle {
      * Gets the bounding <code>Rectangle</code> of this <code>Rectangle</code>.
      * <p>
      * This method is included for completeness, to parallel the <code>getBounds</code> method of
-     * {@link Component}.
+     * {@code Component}.
      *
      * @return a new <code>Rectangle</code>, equal to the bounding <code>Rectangle</code> for this
      * <code>Rectangle</code>.
@@ -204,6 +220,34 @@ public class Rectangle {
      */
     public Point getLocation() {
         return new Point(x, y);
+    }
+
+    /**
+     * Returns the location of the upper-left corner of this {@code Rectangle}.<br>
+     * This is the same as {@link Rectangle#getLocation()}.
+     *
+     * @return The location of the upper-left corner of this {@code Rectangle}.
+     */
+    public Point getUpperLeft() {
+        return getLocation();
+    }
+
+    /**
+     * Returns the location of the upper-right corner of this {@code Rectangle}.
+     *
+     * @return The location of the upper-right corner of this {@code Rectangle}.
+     */
+    public Point getUpperRight() {
+        return new Point(getRight(), getTop());
+    }
+
+    /**
+     * Returns the location of the lower-left corner of this {@code Rectangle}.
+     *
+     * @return The location of the lower-left corner of this {@code Rectangle}.
+     */
+    public Point getLowerLeft() {
+        return new Point(getLeft(), getBottom());
     }
 
     /**

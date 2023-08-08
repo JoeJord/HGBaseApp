@@ -13,87 +13,87 @@ import at.hagru.hgbase.lib.HGBaseText;
 
 /**
  * A number picker preference.
- * 
+ *
  * @author hagru
  */
 public class HGBaseNumberPickerPreference extends DialogPreference {
 
-	private Activity activity;
-	private NumberPicker numberPicker;
-	private int minValue;
-	private int maxValue;
-	private int diff;
-	/**
-	 * Flag if the picked value should be shown in the summary.
-	 */
-	private boolean showPickedValue;
+    private Activity activity;
+    private NumberPicker numberPicker;
+    private int minValue;
+    private int maxValue;
+    private int diff;
+    /**
+     * Flag if the picked value should be shown in the summary.
+     */
+    private boolean showPickedValue;
 
-	public HGBaseNumberPickerPreference(Activity activity, int minValue, int maxValue, int diff, boolean showPickedValue) {
-		super(activity, null);
-		this.activity = activity;
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-		this.diff = diff;
-		this.showPickedValue = showPickedValue;
-	}
-	
-	@Override
-	protected View onCreateDialogView() {
-		LinearLayout mainPanel = HGBaseGuiTools.createLinearLayout(activity, false);
-		if (HGBaseText.existsText(getKey())) {
-			TextView txtTitel  = HGBaseGuiTools.createViewForMessage(activity, HGBaseText.getText(getKey()));
-			mainPanel.addView(txtTitel, HGBaseGuiTools.createLinearLayoutParams(true, false));
-		}
-		numberPicker = HGBaseGuiTools.createRangeNumberPicker(activity, minValue, maxValue, diff, getValue());
-		mainPanel.addView(numberPicker, HGBaseGuiTools.createLinearLayoutParams(true, false));
-		return mainPanel;
-	}	
+    public HGBaseNumberPickerPreference(Activity activity, int minValue, int maxValue, int diff, boolean showPickedValue) {
+        super(activity, null);
+        this.activity = activity;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.diff = diff;
+        this.showPickedValue = showPickedValue;
+    }
 
-	@Override
-	protected void onDialogClosed(boolean positiveResult) {
-		super.onDialogClosed(positiveResult);
-		if (positiveResult) {
-			int value = numberPicker.getValue() * diff;
-			setValue(value);
-			if (showPickedValue) {
-				setSummary(String.valueOf(value));
-			}
-		}
-	}
-	
-	/**
-	 * @return the current value
-	 */
-	public int getValue() {
-		return (HGBaseConfig.existsKey(getKey())) ? HGBaseConfig.getInt(getKey()) : minValue;
-	}
+    @Override
+    protected View onCreateDialogView() {
+        LinearLayout mainPanel = HGBaseGuiTools.createLinearLayout(activity, false);
+        if (HGBaseText.existsText(getKey())) {
+            TextView txtTitel = HGBaseGuiTools.createViewForMessage(activity, HGBaseText.getText(getKey()));
+            mainPanel.addView(txtTitel, HGBaseGuiTools.createLinearLayoutParams(true, false));
+        }
+        numberPicker = HGBaseGuiTools.createRangeNumberPicker(activity, minValue, maxValue, diff, getValue());
+        mainPanel.addView(numberPicker, HGBaseGuiTools.createLinearLayoutParams(true, false));
+        return mainPanel;
+    }
 
-	/**
-	 * @param value the new value to set
-	 */
-	public void setValue(int value) {
-		HGBaseConfig.set(getKey(), value);
-		if (numberPicker != null) {
-			numberPicker.setValue(value / diff);
-		}
-	}
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
+        if (positiveResult) {
+            int value = numberPicker.getValue() * diff;
+            setValue(value);
+            if (showPickedValue) {
+                setSummary(String.valueOf(value));
+            }
+        }
+    }
 
-	/**
-	 * @return the minimum value
-	 */
-	public int getMinValue() {
-		return minValue;
-	}
+    /**
+     * @return the current value
+     */
+    public int getValue() {
+        return (HGBaseConfig.existsKey(getKey())) ? HGBaseConfig.getInt(getKey()) : minValue;
+    }
 
-	/**
-	 * @return the maximum value
-	 */
-	public int getMaxValue() {
-		return maxValue;
-	}	
+    /**
+     * @param value the new value to set
+     */
+    public void setValue(int value) {
+        HGBaseConfig.set(getKey(), value);
+        if (numberPicker != null) {
+            numberPicker.setValue(value / diff);
+        }
+    }
 
-	@Override
-	public CharSequence getSummary() {
-		return (showPickedValue) ? String.valueOf(getValue()) : null;
-	}
+    /**
+     * @return the minimum value
+     */
+    public int getMinValue() {
+        return minValue;
+    }
+
+    /**
+     * @return the maximum value
+     */
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    @Override
+    public CharSequence getSummary() {
+        return (showPickedValue) ? String.valueOf(getValue()) : null;
+    }
 }

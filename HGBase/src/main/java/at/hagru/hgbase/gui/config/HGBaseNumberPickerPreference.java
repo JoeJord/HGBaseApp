@@ -18,15 +18,15 @@ import at.hagru.hgbase.lib.HGBaseText;
  */
 public class HGBaseNumberPickerPreference extends DialogPreference {
 
-    private Activity activity;
+    private final Activity activity;
     private NumberPicker numberPicker;
-    private int minValue;
-    private int maxValue;
-    private int diff;
+    private final int minValue;
+    private final int maxValue;
+    private final int diff;
     /**
      * Flag if the picked value should be shown in the summary.
      */
-    private boolean showPickedValue;
+    private final boolean showPickedValue;
 
     public HGBaseNumberPickerPreference(Activity activity, int minValue, int maxValue, int diff, boolean showPickedValue) {
         super(activity, null);
@@ -41,8 +41,8 @@ public class HGBaseNumberPickerPreference extends DialogPreference {
     protected View onCreateDialogView() {
         LinearLayout mainPanel = HGBaseGuiTools.createLinearLayout(activity, false);
         if (HGBaseText.existsText(getKey())) {
-            TextView txtTitel = HGBaseGuiTools.createViewForMessage(activity, HGBaseText.getText(getKey()));
-            mainPanel.addView(txtTitel, HGBaseGuiTools.createLinearLayoutParams(true, false));
+            TextView txtTitle = HGBaseGuiTools.createViewForMessage(activity, HGBaseText.getText(getKey()));
+            mainPanel.addView(txtTitle, HGBaseGuiTools.createLinearLayoutParams(true, false));
         }
         numberPicker = HGBaseGuiTools.createRangeNumberPicker(activity, minValue, maxValue, diff, getValue());
         mainPanel.addView(numberPicker, HGBaseGuiTools.createLinearLayoutParams(true, false));

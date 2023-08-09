@@ -81,6 +81,19 @@ public class HGBaseSliderPreference extends DialogPreference implements SeekBar.
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
             setValue(currentValue);
+            onPreferenceChange(currentValue);
+        }
+    }
+
+    /**
+     * This method is called, when the value of the preference has changed.
+     *
+     * @param newValue The new value of the preference.
+     */
+    private void onPreferenceChange(int newValue) {
+        OnPreferenceChangeListener preferenceChangeListener = getOnPreferenceChangeListener();
+        if (preferenceChangeListener != null) {
+            preferenceChangeListener.onPreferenceChange(this, newValue);
         }
     }
 

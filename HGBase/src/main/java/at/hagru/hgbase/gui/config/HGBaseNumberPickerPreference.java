@@ -55,9 +55,22 @@ public class HGBaseNumberPickerPreference extends DialogPreference {
         if (positiveResult) {
             int value = numberPicker.getValue() * diff;
             setValue(value);
+            onPreferenceChange(value);
             if (showPickedValue) {
                 setSummary(String.valueOf(value));
             }
+        }
+    }
+
+    /**
+     * This method is called, when the value of the preference has changed.
+     *
+     * @param newValue The new value of the preference.
+     */
+    private void onPreferenceChange(int newValue) {
+        OnPreferenceChangeListener preferenceChangeListener = getOnPreferenceChangeListener();
+        if (preferenceChangeListener != null) {
+            preferenceChangeListener.onPreferenceChange(this, newValue);
         }
     }
 

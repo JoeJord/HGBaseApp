@@ -19,13 +19,13 @@ import at.hagru.hgbase.lib.HGBaseText;
  */
 public class HGBaseSliderPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
 
-    private Activity activity;
+    private final Activity activity;
     private SeekBar seekBar;
     private TextView txtValue;
     private int currentValue;
-    private int minValue;
-    private int maxValue;
-    private String unitText;
+    private final int minValue;
+    private final int maxValue;
+    private final String unitText;
 
     public HGBaseSliderPreference(Activity activity, int minValue, int maxValue, String unitText) {
         super(activity, null);
@@ -33,7 +33,7 @@ public class HGBaseSliderPreference extends DialogPreference implements SeekBar.
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.unitText = (unitText == null) ? "" : unitText;
-        setDefaultValue(Integer.valueOf(minValue));
+        setDefaultValue(minValue);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class HGBaseSliderPreference extends DialogPreference implements SeekBar.
 
     @Override
     public void setDefaultValue(Object defaultValue) {
-        super.setDefaultValue(((Integer) defaultValue).intValue() - minValue);
+        super.setDefaultValue((Integer) defaultValue - minValue);
     }
 
     /**
@@ -66,7 +66,7 @@ public class HGBaseSliderPreference extends DialogPreference implements SeekBar.
      */
     protected void actualizeValue() {
         if (txtValue != null) {
-            txtValue.setText(String.valueOf(currentValue) + " " + unitText);
+            txtValue.setText(currentValue + " " + unitText);
         }
     }
 

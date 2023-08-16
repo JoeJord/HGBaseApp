@@ -15,83 +15,59 @@ import at.hagru.hgbase.lib.HGBaseConfig;
 /**
  * A color preference.<p>
  * If the default color is -1, than it is allowed that no color is selected.
- * 
+ *
  * @author hagru
  */
 public class HGBaseColorPreference extends Preference implements OnColorSelectedListener {
 
-	private static final int NO_COLOR = -1;
-	private static final Dimension PREVIEW_SIZE = new Dimension(HGBaseGuiTools.getButtonHeight(), 
-																HGBaseGuiTools.getButtonHeight());
-	
-	private PreferenceActivity activity;
-	private Color defaultValue;
-	private View colorPreview;
+    private static final int NO_COLOR = -1;
+    private static final Dimension PREVIEW_SIZE = new Dimension(HGBaseGuiTools.getButtonHeight(), HGBaseGuiTools.getButtonHeight());
 
-	public HGBaseColorPreference(PreferenceActivity activity) {
-		super(activity, null);
-		this.activity = activity;
-	}
-	
-	@Override
-	protected void onClick() {
-		super.onClick();
-		boolean allowNoColor = (defaultValue == null); 
-		HGBaseDialog.showColorDialog(activity, getColor(), allowNoColor, HGBaseColorPreference.this);
-	}
-	
-	@Override
-	protected void onBindView(View view) {
-		super.onBindView(view);
-		colorPreview = new View(view.getContext());
-		((ViewGroup) view).addView(colorPreview);
-		HGBaseGuiTools.setViewSize(colorPreview, PREVIEW_SIZE);
-		showColorPreview();
-	}
-	
-	/**
-	 * Shows the color in the preview view
-	 */
-	protected void showColorPreview() {
-		if (colorPreview != null) {
-			Color color = getColor();
-			if (color == null) {
-				colorPreview.setVisibility(View.INVISIBLE);
-			} else {
-				colorPreview.setVisibility(View.VISIBLE);
-				colorPreview.setBackgroundColor(color.getColorCode());
-			}
-		}
-	}
+    private PreferenceActivity activity;
+    private Color defaultValue;
+    private View colorPreview;
 
-	@Override
-	public void setDefaultValue(Object defaultValue) {
-		super.setDefaultValue(defaultValue);
-		this.defaultValue = (defaultValue == null) ? null : (Color) defaultValue;
-	}
-	   
-	/**
-	 * @param color the color to store
-	 */
-    public void setColor(Color color) {
-        if (color == null) {
-            HGBaseConfig.remove(getKey());
-        } else {
-            HGBaseConfig.set(getKey(), color);
-        }
-        showColorPreview();        
+    public HGBaseColorPreference(PreferenceActivity activity) {
+        super(activity, null);
+        this.activity = activity;
     }
-    
-	/**
-	 * @param color the color as integer value to store
-	 */
-	public void setColor(int color) {
-		if (color == NO_COLOR) {
-		    setColor(null);
-		} else {
-			setColor(new Color(color));
-		}
-	}	
+
+    @Override
+    protected void onClick() {
+        super.onClick();
+        boolean allowNoColor = (defaultValue == null);
+        HGBaseDialog.showColorDialog(activity, getColor(), allowNoColor, HGBaseColorPreference.this);
+    }
+
+    @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+        colorPreview = new View(view.getContext());
+        ((ViewGroup) view).addView(colorPreview);
+        HGBaseGuiTools.setViewSize(colorPreview, PREVIEW_SIZE);
+        showColorPreview();
+    }
+
+    /**
+     * Shows the color in the preview view
+     */
+    protected void showColorPreview() {
+        if (colorPreview != null) {
+            Color color = getColor();
+            if (color == null) {
+                colorPreview.setVisibility(View.INVISIBLE);
+            } else {
+                colorPreview.setVisibility(View.VISIBLE);
+                colorPreview.setBackgroundColor(color.getColorCode());
+            }
+        }
+    }
+
+    @Override
+    public void setDefaultValue(Object defaultValue) {
+        super.setDefaultValue(defaultValue);
+        this.defaultValue = (defaultValue == null) ? null : (Color) defaultValue;
+    }
 
     /**
      * @return the color preference
@@ -102,23 +78,46 @@ public class HGBaseColorPreference extends Preference implements OnColorSelected
         } else {
             return null;
         }
-    }	
+    }
 
-	/**
-	 * @return the color preference as integer value
-	 */
-	public int getColorCode() {
-	    Color color = getColor();
-	    return (color == null) ? NO_COLOR : color.getColorCode();
-	}
+    /**
+     * @param color the color to store
+     */
+    public void setColor(Color color) {
+        if (color == null) {
+            HGBaseConfig.remove(getKey());
+        } else {
+            HGBaseConfig.set(getKey(), color);
+        }
+        showColorPreview();
+    }
 
-	@Override
-	public void colorSelected(Integer color) {
-		if (color == null || color.intValue() == NO_COLOR) {
-			setColor(NO_COLOR);
-		} else {
-			setColor(color.intValue());
-		}
-	}	
-	
+    /**
+     * @param color the color as integer value to store
+     */
+    public void setColor(int color) {
+        if (color == NO_COLOR) {
+            setColor(null);
+        } else {
+            setColor(new Color(color));
+        }
+    }
+
+    /**
+     * @return the color preference as integer value
+     */
+    public int getColorCode() {
+        Color color = getColor();
+        return (color == null) ? NO_COLOR : color.getColorCode();
+    }
+
+    @Override
+    public void colorSelected(Integer color) {
+        if (color == null || color.intValue() == NO_COLOR) {
+            setColor(NO_COLOR);
+        } else {
+            setColor(color.intValue());
+        }
+    }
+
 }

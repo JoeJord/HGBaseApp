@@ -118,6 +118,19 @@ public class HGBaseColorPreference extends Preference implements OnColorSelected
         } else {
             setColor(color);
         }
+        onPreferenceChange(color);
     }
 
+    /**
+     * This method is called, when the value of the preference has changed.
+     *
+     * @param newValue The new value of the preference.
+     */
+    private void onPreferenceChange(Integer newValue) {
+        OnPreferenceChangeListener preferenceChangeListener = getOnPreferenceChangeListener();
+        if (preferenceChangeListener != null) {
+            preferenceChangeListener.onPreferenceChange(this, newValue);
+        }
+    }
 }
+

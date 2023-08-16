@@ -42,16 +42,44 @@ public class TestAppConfigDialog extends HGBaseConfigStateDialog {
 
     @Override
     protected boolean canLeave(Preference preference, String newValue) {
-        if ("config_name".equals(preference.getKey())) {
-            if (HGBaseTools.hasContent(newValue)) {
+        switch(preference.getKey()) {
+            case "config_name":
+                if (!HGBaseTools.hasContent(newValue)) {
+                    setErrorMessage("Name must not be empty!");
+                    return false;
+                }
                 char firstLetter = newValue.charAt(0);
                 if (firstLetter < 'A' || firstLetter > 'Z') {
                     setWarnMessage("Name doest not start with a capital letter.");
                 }
-            } else {
-                setErrorMessage("Name must not be empty!");
-                return false;
-            }
+                break;
+            case "config_number":
+                if (Integer.parseInt(newValue) < 3) {
+                    setWarnMessage("Number is less than 3.");
+                }
+                break;
+            case "config_color":
+                if ((!HGBaseTools.hasContent(newValue)) || (Integer.parseInt(newValue) == -1)) {
+                    setWarnMessage("You haven't picked a color.");
+                }
+                break;
+            case "config_value":
+                if (Integer.parseInt(newValue) > 90) {
+                    setWarnMessage("The slider value is greater than 90.");
+                }
+                break;
+            case "config_picker":
+                if (Integer.parseInt(newValue) > 45) {
+                    setWarnMessage("Picked number is greater than 45.");
+                }
+                break;
+            case "config_onoff":
+                if ("false".equals(newValue)) {
+                    setWarnMessage("The switch is turned off!");
+                }
+                break;
+            default:
+                break;
         }
         return true;
     }

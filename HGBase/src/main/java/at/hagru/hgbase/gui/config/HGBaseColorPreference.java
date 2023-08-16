@@ -23,7 +23,7 @@ public class HGBaseColorPreference extends Preference implements OnColorSelected
     private static final int NO_COLOR = -1;
     private static final Dimension PREVIEW_SIZE = new Dimension(HGBaseGuiTools.getButtonHeight(), HGBaseGuiTools.getButtonHeight());
 
-    private PreferenceActivity activity;
+    private final PreferenceActivity activity;
     private Color defaultValue;
     private View colorPreview;
 
@@ -113,10 +113,10 @@ public class HGBaseColorPreference extends Preference implements OnColorSelected
 
     @Override
     public void colorSelected(Integer color) {
-        if (color == null || color.intValue() == NO_COLOR) {
+        if (color == null || color == NO_COLOR) {
             setColor(NO_COLOR);
         } else {
-            setColor(color.intValue());
+            setColor(color);
         }
     }
 

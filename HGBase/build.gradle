@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdkVersion 33
-        versionCode 86
-        versionName "0.86"
+        versionCode 87
+        versionName "0.87"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

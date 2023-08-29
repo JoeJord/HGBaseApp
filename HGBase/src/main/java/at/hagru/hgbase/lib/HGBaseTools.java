@@ -693,7 +693,7 @@ public final class HGBaseTools {
     }
 
     /**
-     * @param day A date formated like yyyy-mm-dd .
+     * @param day A date formatted like yyyy-mm-dd .
      * @return A date object representing the day or null.
      */
     public static Date convertString2Date(String day) {
@@ -851,7 +851,7 @@ public final class HGBaseTools {
      * Returns the first and only element of the collection or null if the collection is empty or contains
      * more than one element.
      *
-     * @param list the collectino with the elements
+     * @param list the collection with the elements
      * @return the first and only element or null
      */
     public static <T> T getSingleElementOrNull(Collection<T> list) {

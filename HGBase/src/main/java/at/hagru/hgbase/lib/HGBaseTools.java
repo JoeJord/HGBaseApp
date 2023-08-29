@@ -35,7 +35,7 @@ public final class HGBaseTools {
     public static final int INVALID_INT = Integer.MIN_VALUE + 17;
     public static final float INVALID_FLOAT = -17.00017f;
     public static final double INVALID_DOUBLE = -17.00017;
-    public static final long INVALID_LONG = Long.MIN_VALUE + 17l;
+    public static final long INVALID_LONG = Long.MIN_VALUE + 17L;
 
     private static final float DIFF_FLOAT = 0.00001f;
     private static final float DIFF_DOUBLE = 0.00001f;
@@ -104,8 +104,7 @@ public final class HGBaseTools {
      */
     public static int toInt(String s) {
         try {
-            Integer i = Integer.valueOf(s);
-            return i.intValue();
+            return Integer.parseInt(s);
         } catch (NumberFormatException e) {
             return INVALID_INT;
         }
@@ -141,8 +140,7 @@ public final class HGBaseTools {
      */
     public static float toFloat(String s) {
         try {
-            Float f = Float.valueOf(s);
-            return f.floatValue();
+            return Float.parseFloat(s);
         } catch (NumberFormatException e) {
             return INVALID_FLOAT;
         }
@@ -156,8 +154,7 @@ public final class HGBaseTools {
      */
     public static double toDouble(String s) {
         try {
-            Double d = Double.valueOf(s);
-            return d.doubleValue();
+            return Double.parseDouble(s);
         } catch (NumberFormatException e) {
             return INVALID_DOUBLE;
         }
@@ -171,8 +168,7 @@ public final class HGBaseTools {
      */
     public static long toLong(String s) {
         try {
-            Long l = Long.valueOf(s);
-            return l.longValue();
+            return Long.parseLong(s);
         } catch (NumberFormatException e) {
             return INVALID_LONG;
         }
@@ -276,7 +272,7 @@ public final class HGBaseTools {
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             t.printStackTrace(printWriter);
-            return toString(t.getMessage()) + "\n" + writer.toString();
+            return toString(t.getMessage()) + "\n" + writer;
         }
     }
 
@@ -420,7 +416,7 @@ public final class HGBaseTools {
      * @return An int array.
      */
     public static int[] toIntArray(List<Integer> list) {
-        return toIntArray(list.toArray(new Integer[list.size()]));
+        return toIntArray(list.toArray(new Integer[0]));
     }
 
     /**
@@ -432,7 +428,7 @@ public final class HGBaseTools {
     public static int[] toIntArray(Integer[] values) {
         int[] intList = new int[values.length];
         for (int i = 0; i < intList.length; i++) {
-            intList[i] = values[i].intValue();
+            intList[i] = values[i];
         }
         return intList;
     }
@@ -446,7 +442,7 @@ public final class HGBaseTools {
     public static Integer[] toIntegerArray(int[] values) {
         Integer[] intList = new Integer[values.length];
         for (int i = 0; i < intList.length; i++) {
-            intList[i] = Integer.valueOf(values[i]);
+            intList[i] = values[i];
         }
         return intList;
     }
@@ -460,7 +456,7 @@ public final class HGBaseTools {
     public static Float[] toFloatArray(float[] values) {
         Float[] fList = new Float[values.length];
         for (int i = 0; i < fList.length; i++) {
-            fList[i] = Float.valueOf(values[i]);
+            fList[i] = values[i];
         }
         return fList;
     }
@@ -565,7 +561,7 @@ public final class HGBaseTools {
      * @return inverted text (asdf -> fdsa).
      */
     public static String invertString(String text) {
-        StringBuffer sb = new StringBuffer(text);
+        StringBuilder sb = new StringBuilder(text);
         return sb.reverse().toString();
     }
 
@@ -613,7 +609,7 @@ public final class HGBaseTools {
     public static String capitalizeFirstLetter(String text) {
         if (hasContent(text)) {
             String firstLetter = text.substring(0, 1).toUpperCase(Locale.getDefault());
-            text = firstLetter + text.substring(1, text.length());
+            text = firstLetter + text.substring(1);
         }
         return text;
     }
@@ -749,7 +745,7 @@ public final class HGBaseTools {
      * @return The result of the comparison by Integer.
      */
     public static int compareInt(int i1, int i2) {
-        return Integer.valueOf(i1).compareTo(Integer.valueOf(i2));
+        return Integer.compare(i1, i2);
     }
 
     /**
@@ -819,13 +815,7 @@ public final class HGBaseTools {
      * @return the item with the given id or null if not found
      */
     public static <T extends HGBaseItem> T findItemById(T[] list, final String id) {
-        return findObject(list, new IFinderListener<T>() {
-
-            @Override
-            public boolean test(T o) {
-                return o.getId().equals(id);
-            }
-        });
+        return findObject(list, o -> o.getId().equals(id));
     }
 
     /**
@@ -986,8 +976,8 @@ public final class HGBaseTools {
     public static Pair<String, String> parseKeyValue(String str, String separator) {
         Pair<String, String> pair = null;
         if (hasContent(str)) {
-            String splits[] = split(str, separator);
-            pair = new Pair<String, String>(splits[0], (splits.length > 0) ? splits[1] : null);
+            String[] splits = split(str, separator);
+            pair = new Pair<>(splits[0], splits[1]);
         }
         return pair;
     }
@@ -1002,7 +992,7 @@ public final class HGBaseTools {
      */
     public static HashMap<String, String> parseKeyValueList(String str, String listSeparator, String valueSeparator) {
         HashMap<String, String> map = new HashMap<>();
-        String splits[] = split(str, listSeparator);
+        String[] splits = split(str, listSeparator);
         for (String split : splits) {
             Pair<String, String> pair = parseKeyValue(split, valueSeparator);
             map.put(pair.first, pair.second);

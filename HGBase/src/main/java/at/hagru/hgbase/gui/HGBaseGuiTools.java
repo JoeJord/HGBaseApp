@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
@@ -44,9 +43,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import androidx.annotation.NonNull;
 import at.hagru.hgbase.HGBaseActivity;
 import at.hagru.hgbase.R;
 import at.hagru.hgbase.android.HGBaseAppTools;
@@ -130,7 +131,7 @@ public class HGBaseGuiTools {
         if (selectOptionEntry != null) {
             List<String> newList = new ArrayList<>(Arrays.asList(array));
             newList.add(0, selectOptionEntry);
-            array = newList.toArray(new String[newList.size()]);
+            array = newList.toArray(new String[0]);
         }
         ArrayAdapter<String> adapter = createArrayAdapter(activity, array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,8 +149,7 @@ public class HGBaseGuiTools {
         if (array == null) {
             array = new String[0];
         }
-        ArrayAdapter<String> adapter = createArrayAdapter(activity, array, android.R.layout.simple_list_item_1);
-        return adapter;
+        return createArrayAdapter(activity, array, android.R.layout.simple_list_item_1);
     }
 
     /**
@@ -178,19 +178,14 @@ public class HGBaseGuiTools {
     public static Button createActionButton(final HGBaseActivity activity, final String actionId) {
         final int resActionId = HGBaseResources.getResourceIdByName(actionId, HGBaseResources.ID);
         if (resActionId != 0) {
-            Button btAction = createButton(activity, HGBaseText.getText(actionId), new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    IMenuAction action = activity.getOptionsMenuAction(resActionId);
-                    if (action == null) {
-                        HGBaseLog.logError("Action is not defined: " + actionId);
-                    } else {
-                        action.perform(resActionId, null);
-                    }
+            return createButton(activity, HGBaseText.getText(actionId), v -> {
+                IMenuAction action = activity.getOptionsMenuAction(resActionId);
+                if (action == null) {
+                    HGBaseLog.logError("Action is not defined: " + actionId);
+                } else {
+                    action.perform(resActionId, null);
                 }
             });
-            return btAction;
         } else {
             return null;
         }
@@ -277,9 +272,9 @@ public class HGBaseGuiTools {
     public static <T> ArrayAdapter<T> createArrayAdapter(Activity activity, T[] array, int resId) {
         if (array == null) {
             // it would be preferable to create an array of T with size 0, but this is not possible with Java
-            return new ArrayAdapter<T>(activity, resId, array);
+            return new ArrayAdapter<>(activity, resId, array);
         } else {
-            return new ArrayAdapter<T>(activity, resId, array);
+            return new ArrayAdapter<>(activity, resId, array);
         }
     }
 
@@ -301,13 +296,7 @@ public class HGBaseGuiTools {
         picker.setMaxValue(max / diff);
         picker.setValue(value / diff);
         if (diff != 1) {
-            picker.setFormatter(new NumberPicker.Formatter() {
-
-                @Override
-                public String format(int value) {
-                    return String.valueOf(value * diff);
-                }
-            });
+            picker.setFormatter(value1 -> String.valueOf(value1 * diff));
         }
         return picker;
     }
@@ -320,12 +309,7 @@ public class HGBaseGuiTools {
     public static void addViewToTab(TabHost tabbedPane, final View panel, String tabId) {
         TabSpec playerTab = tabbedPane.newTabSpec(tabId);
         playerTab.setIndicator(HGBaseText.getText(tabId));
-        playerTab.setContent(new TabHost.TabContentFactory() {
-            @Override
-            public View createTabContent(String tag) {
-                return panel;
-            }
-        });
+        playerTab.setContent(tag -> panel);
         tabbedPane.addTab(playerTab);
     }
 
@@ -455,14 +439,14 @@ public class HGBaseGuiTools {
      * @return the image or null if resource is invalid
      */
     public static Bitmap loadImage(int resId) {
-        Bitmap img = imageResIdMap.get(Integer.valueOf(resId));
+        Bitmap img = imageResIdMap.get(resId);
         if (img != null) {
             return img;
         } else {
             try {
                 img = HGBaseResources.getBitmap(resId);
                 if (img != null) {
-                    imageResIdMap.put(Integer.valueOf(resId), img);
+                    imageResIdMap.put(resId, img);
                 }
                 return img;
             } catch (NotFoundException e) {
@@ -534,13 +518,7 @@ public class HGBaseGuiTools {
      */
     public static void setTextOnLabel(final TextView label, final CharSequence text) {
         if (label != null) {
-            boolean success = label.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    label.setText(text);
-                }
-            });
+            boolean success = label.post(() -> label.setText(text));
             if (!success) {
                 HGBaseLog.logWarn("Could not set text '" + text + "' on label " + label);
             }
@@ -614,7 +592,7 @@ public class HGBaseGuiTools {
         if ((lw > 0 && lw < iw) || (lh > 0 && lh < ih)) {
             double factorW = lw / iw;
             double factorH = lh / ih;
-            double f = (factorW < factorH) ? factorW : factorH;
+            double f = Math.min(factorW, factorH);
             return Bitmap.createScaledBitmap(image, (int) (iw * f), (int) (ih * f), true);
         } else {
             return image;
@@ -630,13 +608,9 @@ public class HGBaseGuiTools {
     public static void setToolTipText(View view, String text) {
         if (HGBaseTools.hasContent(text)) {
             final String tooltipText = (HGBaseText.existsText(text)) ? HGBaseText.getText(text) : text;
-            view.setOnLongClickListener(new OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    HGBaseAppTools.showToolTip(tooltipText, v.getContext());
-                    return true;
-                }
+            view.setOnLongClickListener(v -> {
+                HGBaseAppTools.showToolTip(tooltipText, v.getContext());
+                return true;
             });
         } else {
             view.setOnLongClickListener(null);
@@ -669,7 +643,7 @@ public class HGBaseGuiTools {
      */
     public static boolean hasViewAnyParentOfType(View view, Class<? extends View> viewType) {
         ViewParent parent = view.getParent();
-        if (parent == null || !(parent instanceof View)) {
+        if (!(parent instanceof View)) {
             return false;
         } else if (parent.getClass().equals(viewType)) {
             return true;
@@ -687,7 +661,7 @@ public class HGBaseGuiTools {
      */
     public static boolean hasViewAnyParentOfType(View view, String className) {
         ViewParent parent = view.getParent();
-        if (parent == null || !(parent instanceof View)) {
+        if (!(parent instanceof View)) {
             return false;
         } else if (parent.getClass().getSimpleName().equals(className)) {
             return true;
@@ -705,13 +679,7 @@ public class HGBaseGuiTools {
      * @return a view of the given type or null
      */
     public static View findFirstViewOfType(View rootView, final Class<? extends View> viewType) {
-        return findFirstViewOfType(rootView, new ClassTypeChecker<View>() {
-
-            @Override
-            public boolean isCorrectType(Class<?> classType, View checkObject) {
-                return classType.equals(viewType);
-            }
-        });
+        return findFirstViewOfType(rootView, (classType, checkObject) -> classType.equals(viewType));
     }
 
     /**
@@ -789,9 +757,9 @@ public class HGBaseGuiTools {
         } else {
             double x = 0.;
             double y = 0.;
-            for (int i = 0; i < polygon.length; i++) {
-                x += polygon[i].x;
-                y += polygon[i].y;
+            for (Point point : polygon) {
+                x += point.x;
+                y += point.y;
             }
             x = x / polygon.length;
             y = y / polygon.length;
@@ -821,7 +789,7 @@ public class HGBaseGuiTools {
      */
     public static Set<View> getAllCompenentsByEnabledState(View parent, final boolean enabled) {
 
-        final Set<View> components = Collections.newSetFromMap(new WeakHashMap<View, Boolean>());
+        final Set<View> components = Collections.newSetFromMap(new WeakHashMap<>());
         new HierarchyWalker() {
 
             @Override
@@ -901,7 +869,7 @@ public class HGBaseGuiTools {
     /**
      * Sets a black border around the given view.
      *
-     * @param view
+     * @param view The view where to set to border.
      */
     public static void setBlackBorder(View view) {
         view.setBackground(HGBaseResources.getDrawable(R.drawable.border));
@@ -912,11 +880,10 @@ public class HGBaseGuiTools {
      * NOTE: You need a view that is able to resize to full screen (e.g. just a dummy View). It will not work for the
      * default dialogs created by {@link HGBaseDialog}.
      *
-     * @param activity the activity to get the screen size from
-     * @param dialog   the dialog to change the size, must not be null
+     * @param dialog the dialog to change the size, must not be null
      */
-    public static void setSizeToFullScreen(Activity activity, Dialog dialog) {
-        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    public static void setSizeToFullScreen(@NonNull Dialog dialog) {
+        Objects.requireNonNull(dialog.getWindow()).setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**
@@ -924,9 +891,8 @@ public class HGBaseGuiTools {
      *
      * @param <T> the type of the object to check
      */
-    public static interface ClassTypeChecker<T> {
-
-        public boolean isCorrectType(Class<?> classType, T checkObject);
+    public interface ClassTypeChecker<T> {
+        boolean isCorrectType(Class<?> classType, T checkObject);
     }
 
     /**

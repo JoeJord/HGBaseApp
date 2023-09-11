@@ -7,18 +7,24 @@ import android.content.res.Configuration;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Insets;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.view.Display;
+import android.view.DisplayCutout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowInsets;
 import android.view.WindowManager;
+import android.view.WindowMetrics;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,6 +38,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,7 +55,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import androidx.annotation.NonNull;
 import at.hagru.hgbase.HGBaseActivity;
 import at.hagru.hgbase.R;
 import at.hagru.hgbase.android.HGBaseAppTools;
@@ -345,13 +352,35 @@ public class HGBaseGuiTools {
             activity = HGBaseActivity.getInstance();
         }
         WindowManager wm = activity.getWindowManager();
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        if (fullscreen) {
-            display.getRealSize(size);
+        Point size;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowMetrics metrics = wm.getCurrentWindowMetrics();
+            Rect bounds = metrics.getBounds();
+            int width = bounds.width();
+            int height = bounds.height();
+            if (!fullscreen) {
+                Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
+                width -= insets.left + insets.right;
+                height -= insets.top + insets.bottom;
+            }
+            // Consider cut off regions (e.g. for front camera).
+            DisplayCutout cutout = metrics.getWindowInsets().getDisplayCutout();
+            if (cutout != null) {
+                width -= cutout.getSafeInsetLeft() + cutout.getSafeInsetRight();
+                height -= cutout.getSafeInsetTop() + cutout.getSafeInsetBottom();
+            }
+            size = new Point(width, height);
         } else {
-            display.getSize(size);
+            Display display = wm.getDefaultDisplay();
+            size = new Point();
+            if (fullscreen) {
+                display.getRealSize(size);
+            } else {
+                display.getSize(size);
+            }
         }
+
         return size;
     }
 

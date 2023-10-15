@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'at.hagru.hgbase'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 21
-        targetSdkVersion 33
+        targetSdk 34
         versionCode 90
         versionName "0.90"
 

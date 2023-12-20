@@ -220,6 +220,19 @@ public final class HGBaseXMLTools {
     }
 
     /**
+     * Returns the given attribute of the node as boolean or {@code defaultValue} if the attribute value was not specified.
+     *
+     * @param node The node to look up.
+     * @param attribute The attribute to look for.
+     * @param defaultValue The value if the value was not specified.
+     * @return The given attribute of the node as boolean or {@code defaultValue} if the attribute value was not specified.
+     */
+    public static boolean getAttributeBooleanValue(Node node, String attribute, boolean defaultValue) {
+        String value = getAttributeValue(node, attribute);
+        return HGBaseTools.hasContent(value) ? HGBaseTools.toBoolean(value) : defaultValue;
+    }
+
+    /**
      * Returns the text value of the node.
      *
      * @param node node to look up.

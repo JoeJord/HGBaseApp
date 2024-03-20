@@ -39,8 +39,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -55,6 +53,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import androidx.annotation.NonNull;
 import at.hagru.hgbase.HGBaseActivity;
 import at.hagru.hgbase.R;
 import at.hagru.hgbase.android.HGBaseAppTools;
@@ -913,6 +912,17 @@ public class HGBaseGuiTools {
      */
     public static void setSizeToFullScreen(@NonNull Dialog dialog) {
         Objects.requireNonNull(dialog.getWindow()).setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * Utility method to convert a size specified in pixels to a corresponding font size in points.
+     *
+     * @param pixelSize The size in pixels to be converted to font size in points.
+     * @param context   The context that provides the display metrics.
+     * @return The corresponding font size in points.
+     */
+    public static float convertPixelToFontSize(int pixelSize, Context context) {
+        return ((float) pixelSize) / (context.getResources().getDisplayMetrics().densityDpi / 72f);
     }
 
     /**

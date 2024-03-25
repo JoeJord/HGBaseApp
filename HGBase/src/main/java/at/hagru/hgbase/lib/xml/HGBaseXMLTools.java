@@ -28,6 +28,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import at.hagru.hgbase.android.HGBaseAppTools;
+import at.hagru.hgbase.android.awt.Color;
 import at.hagru.hgbase.lib.HGBaseFileTools;
 import at.hagru.hgbase.lib.HGBaseLog;
 import at.hagru.hgbase.lib.HGBaseTools;
@@ -233,11 +234,43 @@ public final class HGBaseXMLTools {
     }
 
     /**
-     * Returns the text value of the node.
+     * Returns the given attribute of the node as color.<br>
+     * The value of the value must be {@code RRGGBB} where {@code RR}, {@code GG} and {@code BB} are the hexadecimal values for red, green and blue.<br>
+     * If the value is not a valid color, then {@code null} will be returned.
      *
      * @param node node to look up.
-     * @return text value.
+     * @param attribute attribute to look for.
+     * @return attribute value as {@code Color} or {@code null}.
      */
+    public static Color getAttributeRGBColorValue(Node node, String attribute) {
+        String value = getAttributeValue(node, attribute);
+        try {
+            int r = Integer.parseInt(value.substring(0, 2), 16);
+            int g = Integer.parseInt(value.substring(2, 4), 16);
+            int b = Integer.parseInt(value.substring(4, 6), 16);
+            return new Color(r, g, b);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the given attribute of the node as color.<br>
+     * The value of the value must be {@code RRGGBB} where {@code RR}, {@code GG} and {@code BB} are the hexadecimal values for red, green and blue.<br>
+     * If the value is not a valid color, then {@code defaultValue} will be returned.
+     *
+     * @param node node to look up.
+     * @param attribute attribute to look for.
+     * @return attribute value as {@code Color} or {@code defaultValue}.
+     */
+    public static Color getAttributeRGBColorValue(Node node, String attribute, Color defaultValue) {
+        Color color = getAttributeRGBColorValue(node, attribute);
+        if (color == null) {
+            color = defaultValue;
+        }
+        return color;
+    }
+
     public static String getNodeValue(Node node) {
         Node text = node.getFirstChild();
         if (text != null) {

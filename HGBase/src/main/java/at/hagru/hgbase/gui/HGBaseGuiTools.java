@@ -915,17 +915,6 @@ public class HGBaseGuiTools {
     }
 
     /**
-     * Utility method to convert a size specified in pixels to a corresponding font size in points.
-     *
-     * @param pixelSize The size in pixels to be converted to font size in points.
-     * @param context   The context that provides the display metrics.
-     * @return The corresponding font size in points.
-     */
-    public static float convertPixelToFontSize(int pixelSize, Context context) {
-        return ((float) pixelSize) / (context.getResources().getDisplayMetrics().densityDpi / 72f);
-    }
-
-    /**
      * Checks whether the given class is of correct type.
      *
      * @param <T> the type of the object to check

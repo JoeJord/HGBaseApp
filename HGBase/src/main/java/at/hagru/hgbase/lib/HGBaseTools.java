@@ -322,7 +322,6 @@ public final class HGBaseTools {
      * @param o the object to clone, may be null
      * @return a clone of the object or null if o is null
      * @throws UnsupportedOperationException if clone method is not public
-     * @throws CloneNotSupportedException    if clone method throws this exception
      */
     @SuppressWarnings("unchecked")
     public static <T extends Cloneable> T clone(T o) {
@@ -726,8 +725,8 @@ public final class HGBaseTools {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(day);
-        int year = cal.get(Calendar.YEAR);// day.getYear()+1900;
-        int mon = cal.get(Calendar.MONTH) + 1;// day.getMonth()+1;
+        int year = cal.get(Calendar.YEAR);
+        int mon = cal.get(Calendar.MONTH) + 1;
         String dayText = year + "-";
         if (mon < 10) {
             dayText = dayText + "0";
@@ -996,7 +995,9 @@ public final class HGBaseTools {
         String[] splits = split(str, listSeparator);
         for (String split : splits) {
             Pair<String, String> pair = parseKeyValue(split, valueSeparator);
-            map.put(pair.first, pair.second);
+            if (pair != null) {
+                map.put(pair.first, pair.second);
+            }
         }
         return map;
     }

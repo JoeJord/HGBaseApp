@@ -1004,10 +1004,10 @@ public final class HGBaseTools {
     /**
      * Returns {@code true} if the specified value is one of the specified possible values.
      *
-     * @param value The value to check.
+     * @param value          The value to check.
      * @param possibleValues The list of possible values.
+     * @param <T>            The type of the values.
      * @return {@code true} if the specified value is one of the specified possible values.
-     * @param <T> The type of the values.
      */
     @SafeVarargs
     public static <T> boolean isOneOf(final T value, final T... possibleValues) {

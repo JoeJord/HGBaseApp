@@ -20,14 +20,30 @@ public class Pair<F, S> {
     private S second;
 
     /**
+     * Creates a new pair of {@code null} objects.
+     */
+    public Pair() {
+        this(null, null);
+    }
+
+    /**
      * Create a new pair of objects.
      *
      * @param first  the first object, may be {@code null}
      * @param second the second object, may be {@code null}
      */
     public Pair(F first, S second) {
+        setFirst(first);
+        setSecond(second);
+    }
+
+    /**
+     * Sets the first object.
+     *
+     * @param first The object to set, may be {@code null}.
+     */
+    public void setFirst(F first) {
         this.first = first;
-        this.second = second;
     }
 
     /**
@@ -37,6 +53,15 @@ public class Pair<F, S> {
      */
     public F getFirst() {
         return first;
+    }
+
+    /**
+     * Sets the second object.
+     *
+     * @param second The object to set, may be {@code null}.
+     */
+    public void setSecond(S second) {
+        this.second = second;
     }
 
     /**

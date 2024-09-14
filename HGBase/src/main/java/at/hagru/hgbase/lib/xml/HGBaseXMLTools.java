@@ -13,6 +13,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,6 +38,8 @@ import at.hagru.hgbase.android.awt.Color;
 import at.hagru.hgbase.lib.HGBaseFileTools;
 import at.hagru.hgbase.lib.HGBaseLog;
 import at.hagru.hgbase.lib.HGBaseTools;
+import at.hagru.hgbase.lib.Pair;
+import at.hagru.hgbase.lib.TriConsumer;
 
 /**
  * Contains xml tools
@@ -39,6 +47,18 @@ import at.hagru.hgbase.lib.HGBaseTools;
  * @author hagru
  */
 public final class HGBaseXMLTools {
+    /**
+     * The XML key for the map entry node.
+     */
+    private static final String MAP_ENTRY_NODE_KEY = "mapentry";
+    /**
+     * The XML key for the key node.
+     */
+    private static final String KEY_NODE_KEY = "key";
+    /**
+     * The XML key for the value node.
+     */
+    private static final String VALUE_NODE_KEY = "value";
 
     private HGBaseXMLTools() {
         super();
@@ -355,5 +375,189 @@ public final class HGBaseXMLTools {
      */
     public static String getEncoding() {
         return HGBaseFileTools.getEncoding();
+    }
+
+    /**
+     * Writes the specified collection to the specified XML document.
+     *
+     * @param doc The XML document.
+     * @param parent The parent node.
+     * @param collectionName The name of the node for the collection.
+     * @param elementName The name of the nodes for the collection elements.
+     * @param collection The collection to write.
+     * @param elementWriter The writer to write one element to the XML document.
+     * @param <T> The type of the collection elements.
+     */
+    public static <T> void writeCollection(Document doc, Element parent, String collectionName, String elementName, Collection<T> collection, BiConsumer<Element, T> elementWriter) {
+        if (!HGBaseTools.hasContent(collectionName)) {
+            throw new IllegalArgumentException("The specified collection name must not be empty!");
+        }
+        Element collectionNode = createElement(doc, parent, collectionName);
+        if ((collection == null) || (collection.isEmpty())) {
+            return;
+        }
+        if (!HGBaseTools.hasContent(elementName)) {
+            throw new IllegalArgumentException("The specified element name must not be empty!");
+        }
+        collection.forEach(element -> elementWriter.accept(createElement(doc, collectionNode, elementName), element));
+    }
+
+    /**
+     * Reads a list of values from the specified node.
+     *
+     * @param parent The parent node of the collection.
+     * @param collectionName The name of the node of the collection.
+     * @param elementName The name of the nodes of the collection elements.
+     * @param collectionSupplier The supplier for the collection where to store the values.
+     * @param elementReader The reader to read one element from the element node.
+     * @return The collection with the read values.
+     * @param <T> The type of the collection elements.
+     */
+    public static <T> Collection<T> readCollection(Node parent, String collectionName, String elementName, Supplier<Collection<T>> collectionSupplier, Function<Node, T> elementReader) {
+        if (!HGBaseTools.hasContent(collectionName)) {
+            throw new IllegalArgumentException("The specified collection name must not be empty!");
+        }
+        if (!HGBaseTools.hasContent(elementName)) {
+            throw new IllegalArgumentException("The specified element name must not be empty!");
+        }
+        Collection<T> collection = collectionSupplier.get();
+        ChildNodeIterator.run(new ChildNodeIterator(parent, null, collection) {
+            @Override
+            public void performNode(Node node, int index, Object obj) {
+                if (!collectionName.equals(node.getNodeName())) {
+                    return;
+                }
+                ChildNodeIterator.run(new ChildNodeIterator(node, null, obj) {
+                    @Override
+                    public void performNode(Node node, int index, Object obj) {
+                        if (!elementName.equals(node.getNodeName())) {
+                            return;
+                        }
+                        collection.add(elementReader.apply(node));
+                    }
+                });
+            }
+        });
+        return collection;
+    }
+
+    /**
+     * Writes the specified map to the specified XML document.
+     *
+     * @param doc The XML document.
+     * @param parent The parent node.
+     * @param mapName The name of the node for the map.
+     * @param map The map to write.
+     * @param entryWriter The writer to write one map entry to the XML document.
+     * @param <K> The type of the map keys.
+     * @param <V> The type of the map values.
+     */
+    public static <K, V> void writeMap(Document doc, Element parent, String mapName, Map<K, V> map, TriConsumer<Element, K, V> entryWriter) {
+        Element mapNode = createElement(doc, parent, mapName);
+        if ((map == null) || (map.isEmpty())) {
+            return;
+        }
+        map.forEach((key, value) -> entryWriter.accept(mapNode, key, value));
+    }
+
+    /**
+     * Writes the specified map to the specified XML document.
+     *
+     * @param doc The XML document.
+     * @param parent The parent node.
+     * @param mapName The name of the node for the map.
+     * @param map The map to write.
+     * @param keyWriter The writer to write the key of one map entry to the XML document.
+     * @param valueWriter The writer to write the value on one map entry to the XML document.
+     * @param <K> The type of the map keys.
+     * @param <V> The type of the map values.
+     */
+    public static <K, V> void writeMap(Document doc, Element parent, String mapName, Map<K, V> map, BiConsumer<Element, K> keyWriter, BiConsumer<Element, V> valueWriter) {
+        writeMap(doc, parent, mapName, map, (mapNode, key, value) -> {
+            Element entryNode = createElement(doc, mapNode, MAP_ENTRY_NODE_KEY);
+            keyWriter.accept(createElement(doc, entryNode, KEY_NODE_KEY), key);
+            valueWriter.accept(createElement(doc, entryNode, VALUE_NODE_KEY), value);
+        });
+    }
+
+    /**
+     * Reads mapped values from the specified node.
+     *
+     * @param parent The parent node of the map.
+     * @param mapName The name of the node of the map.
+     * @param mapSupplier The supplier for the map where to store the elements.
+     * @param elementReader The reader to read one element from the element node.
+     * @return The map with the read values.
+     * @param <K> The type of the map keys.
+     * @param <V> The type of the map values.
+     */
+    public static <K, V> Map<K, V> readMap(Node parent, String mapName, Supplier<Map<K, V>> mapSupplier, Function<Node, Set<Pair<K, V>>> elementReader) {
+        if (!HGBaseTools.hasContent(mapName)) {
+            throw new IllegalArgumentException("The specified map name must not be empty!");
+        }
+        Map<K, V> map = mapSupplier.get();
+        ChildNodeIterator.run(new ChildNodeIterator(parent, null, map) {
+            @Override
+            public void performNode(Node node, int index, Object obj) {
+                if (!mapName.equals(node.getNodeName())) {
+                    return;
+                }
+                elementReader.apply(node).forEach(entry -> map.put(entry.getFirst(), entry.getSecond()));
+            }
+        });
+        return map;
+    }
+
+    /**
+     * Reads mapped values from the specified node.
+     *
+     * @param parent The parent node of the map.
+     * @param mapName The name of the node of the map.
+     * @param mapSupplier The supplier for the map where to store the elements.
+     * @param keyReader The reader to read the key.
+     * @param valueReader The reader to read the value.
+     * @return The map with the read values.
+     * @param <K> The type of the map keys.
+     * @param <V> The type of the map values.
+     */
+    public static <K, V> Map<K, V> readMap(Node parent, String mapName, Supplier<Map<K, V>> mapSupplier, Function<Node, K> keyReader, Function<Node, V> valueReader) {
+        if (!HGBaseTools.hasContent(mapName)) {
+            throw new IllegalArgumentException("The specified map name must not be empty!");
+        }
+        Map<K, V> map = mapSupplier.get();
+        ChildNodeIterator.run(new ChildNodeIterator(parent, null, map) {
+            @Override
+            public void performNode(Node mapNode, int index, Object obj) {
+                if (!mapName.equals(mapNode.getNodeName())) {
+                    return;
+                }
+                ChildNodeIterator.run(new ChildNodeIterator(mapNode, null, obj) {
+                    @Override
+                    public void performNode(Node entryNode, int index, Object obj) {
+                        if (!MAP_ENTRY_NODE_KEY.equals(entryNode.getNodeName())) {
+                            return;
+                        }
+                        Pair<K, V> pair = new Pair<>();
+                        ChildNodeIterator.run(new ChildNodeIterator(entryNode, null, obj) {
+                            @Override
+                            public void performNode(Node node, int index, Object obj) {
+                                switch (node.getNodeName()) {
+                                    case KEY_NODE_KEY:
+                                        pair.setFirst(keyReader.apply(node));
+                                        break;
+                                    case VALUE_NODE_KEY:
+                                        pair.setSecond(valueReader.apply(node));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        });
+                        map.put(pair.getFirst(), pair.getSecond());
+                    }
+                });
+            }
+        });
+        return map;
     }
 }

@@ -238,7 +238,7 @@ public final class HGBaseXMLTools {
      * The value of the value must be {@code RRGGBB} where {@code RR}, {@code GG} and {@code BB} are the hexadecimal values for red, green and blue.<br>
      * If the value is not a valid color, then {@code null} will be returned.
      *
-     * @param node node to look up.
+     * @param node      node to look up.
      * @param attribute attribute to look for.
      * @return attribute value as {@code Color} or {@code null}.
      */
@@ -259,7 +259,7 @@ public final class HGBaseXMLTools {
      * The value of the value must be {@code RRGGBB} where {@code RR}, {@code GG} and {@code BB} are the hexadecimal values for red, green and blue.<br>
      * If the value is not a valid color, then {@code defaultValue} will be returned.
      *
-     * @param node node to look up.
+     * @param node      node to look up.
      * @param attribute attribute to look for.
      * @return attribute value as {@code Color} or {@code defaultValue}.
      */

@@ -293,7 +293,7 @@ public final class HGBaseTools {
      * @return the system specific carriage return/line feed string
      */
     public static String getCRLF() {
-        return System.getProperty("line.separator");
+        return System.lineSeparator();
     }
 
     /**
@@ -902,7 +902,6 @@ public final class HGBaseTools {
         DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
         return df.format(Calendar.getInstance().getTime());
     }
-
 
     /**
      * Transforms any exception into a runtime exception (

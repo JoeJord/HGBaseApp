@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +43,7 @@ public final class HGBaseTools {
     private static final float DIFF_DOUBLE = 0.00001f;
 
     private static long lastTime = -1;
+    private static Random random = new Random();
 
     private HGBaseTools() {
         super();
@@ -999,6 +1001,22 @@ public final class HGBaseTools {
             }
         }
         return map;
+    }
+
+    /**
+     * Returns a randomly picked element from the specified list or {@code null} if the list is {@code null} or empty.
+     *
+     * @param list   The list.
+     * @param remove If {@code true} the picked element is removed from the list.
+     * @param <T>    The type of the elements in the list.
+     * @return A randomly picked element from the specified list or {@code null} if the list is {@code null} or empty.
+     */
+    public static <T> T pickRandomElement(List<T> list, boolean remove) {
+        if ((list == null) || (list.isEmpty())) {
+            return null;
+        }
+        int index = random.nextInt(list.size());
+        return (remove) ? list.remove(index) : list.get(index);
     }
 
     /**

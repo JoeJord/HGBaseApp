@@ -40,8 +40,6 @@ publishing {
         mavenRelease(MavenPublication) {
             if (components.findByName("release") != null) {
                 from components.release
-            } else {
-                println "WARNUNG: Die 'release'-Komponente wurde nicht gefunden. Maven Publish wird übersprungen."
             }
 
             groupId = 'at.hagru.hgbase'

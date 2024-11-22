@@ -34,3 +34,23 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
+
+publishing {
+    publications {
+        mavenRelease(MavenPublication) {
+            if (components.findByName("release") != null) {
+                from components.release
+            } else {
+                println "WARNUNG: Die 'release'-Komponente wurde nicht gefunden. Maven Publish wird übersprungen."
+            }
+
+            groupId = 'at.hagru.hgbase'
+            artifactId = 'hgbase-library'
+            version = '0.96'
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}

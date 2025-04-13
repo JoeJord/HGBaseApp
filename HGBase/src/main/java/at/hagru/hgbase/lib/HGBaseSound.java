@@ -49,7 +49,7 @@ public final class HGBaseSound {
                 try {
                     afd = am.openFd(HGBaseFileTools.correctAssetsPath(audioFile));
                     soundId = soundPool.load(afd, 1);
-                    if (soundId != null && soundId.intValue() > 0) {
+                    if (soundId > 0) {
                         HGBaseTools.delay(100);
                         soundPoolAssetsMap.put(audioFile, soundId);
                     }
@@ -58,7 +58,7 @@ public final class HGBaseSound {
                 }
 
             }
-            if (soundId != null && soundId.intValue() > 0) {
+            if (soundId != null && soundId > 0) {
                 soundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
             }
         }
@@ -90,6 +90,6 @@ public final class HGBaseSound {
      */
     public static boolean existsSoundFile(String audioFile) {
         Integer soundId = soundPoolAssetsMap.get(audioFile);
-        return (soundId != null && soundId.intValue() > 0);
+        return (soundId != null && soundId > 0);
     }
 }

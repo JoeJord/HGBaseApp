@@ -54,7 +54,7 @@ public class TestAppConfigDialog extends HGBaseConfigStateDialog {
                 }
                 break;
             case "config_number":
-                if (Integer.parseInt(newValue) < 3) {
+                if (HGBaseTools.hasContent(newValue) && Integer.parseInt(newValue) < 3) {
                     setWarnMessage("Number is less than 3.");
                 }
                 break;

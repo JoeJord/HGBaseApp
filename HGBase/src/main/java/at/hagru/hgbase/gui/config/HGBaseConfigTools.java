@@ -23,7 +23,7 @@ import at.hagru.hgbase.lib.HGBaseTools;
  *
  * @author hagru
  */
-final public class HGBaseConfigTools {
+public final class HGBaseConfigTools {
 
     private static final String SWITCH_TEXT_ON_APPENDING = "_on";
     private static final String SWITCH_TEXT_OFF_APPENDING = "_off";
@@ -143,6 +143,51 @@ final public class HGBaseConfigTools {
     }
 
     /**
+     * Generates the entries for a list preference bases on the specified values.
+     *
+     * @param values The values for the list preference.
+     * @return The entries for a list preference bases on the specified values.
+     */
+    private static String[] generateListEntries(String[] values) {
+        String[] valueText = values.clone();
+        for (int i = 0; i < valueText.length; i++) {
+            if (HGBaseText.existsText(valueText[i])) {
+                valueText[i] = HGBaseText.getText(valueText[i]);
+            }
+        }
+        return valueText;
+    }
+
+    /**
+     * Generates the image entries for list preference based on the specified values and images.
+     *
+     * @param activity         The activity for the list preference.
+     * @param values           The values for the list preference.
+     * @param images           The images for the list preference.
+     * @param showTextAndImage {@code true} to show the text value and the image, or {@code false} to show only images.
+     * @return The image entries for list preference based on the specified values and images.
+     */
+    private static CharSequence[] generateListImageEntries(PreferenceActivity activity, String[] values, Bitmap[] images, boolean showTextAndImage) {
+        CharSequence[] valueImage = new CharSequence[Math.max(images.length, values.length)];
+        for (int i = 0; i < images.length; i++) {
+            if (images[i] != null) {
+                valueImage[i] = HGBaseGuiTools.createStringForImage(activity.getApplicationContext(), images[i], HGBaseGuiTools.getButtonHeight(), HGBaseGuiTools.getScreenSize(activity).x / 2);
+                if (showTextAndImage && i < values.length && valueImage[i] instanceof SpannableStringBuilder) {
+                    ((SpannableStringBuilder) valueImage[i]).append("   ").append(HGBaseText.getText(values[i]));
+                }
+            } else if (showTextAndImage && i < values.length) {
+                valueImage[i] = HGBaseText.getText(values[i]);
+            }
+        }
+        if (values.length > images.length) {
+            for (int i = images.length; i < values.length; i++) {
+                valueImage[i] = HGBaseText.getText(values[i]);
+            }
+        }
+        return valueImage;
+    }
+
+    /**
      * Create a list preference that holds a given number of text.
      *
      * @param activity          the preference activity
@@ -159,31 +204,9 @@ final public class HGBaseConfigTools {
         setKeyTitleDefaultValue(list, key, defaultValue);
         list.setEntryValues(values);
         if (images == null || images.length == 0) {
-            String[] valueText = values.clone();
-            for (int i = 0; i < valueText.length; i++) {
-                if (HGBaseText.existsText(valueText[i])) {
-                    valueText[i] = HGBaseText.getText(valueText[i]);
-                }
-            }
-            list.setEntries(valueText);
+            list.setEntries(generateListEntries(values));
         } else {
-            CharSequence[] valueImage = new CharSequence[Math.max(images.length, values.length)];
-            for (int i = 0; i < images.length; i++) {
-                if (images[i] != null) {
-                    valueImage[i] = HGBaseGuiTools.createStringForImage(activity.getApplicationContext(), images[i], HGBaseGuiTools.getButtonHeight(), HGBaseGuiTools.getScreenSize(activity).x / 2);
-                    if (showTextAndImage && i < values.length && valueImage[i] instanceof SpannableStringBuilder) {
-                        ((SpannableStringBuilder) valueImage[i]).append("   " + HGBaseText.getText(values[i]));
-                    }
-                } else if (showTextAndImage && i < values.length) {
-                    valueImage[i] = HGBaseText.getText(values[i]);
-                }
-            }
-            if (values.length > images.length) {
-                for (int i = images.length; i < values.length; i++) {
-                    valueImage[i] = HGBaseText.getText(values[i]);
-                }
-            }
-            list.setEntries(valueImage);
+            list.setEntries(generateListImageEntries(activity, values, images, showTextAndImage));
         }
         list.setValue(HGBaseConfig.get(key, defaultValue));
         if (showSelectedValue) {
@@ -312,7 +335,7 @@ final public class HGBaseConfigTools {
      */
     public static HGBaseSliderPreference createSliderPreference(PreferenceActivity activity, String key, int minValue, int maxValue, int defaultValue, String unitText) {
         HGBaseSliderPreference sliderPref = new HGBaseSliderPreference(activity, minValue, maxValue, unitText);
-        setKeyTitleDefaultValue(sliderPref, key, Integer.valueOf(defaultValue));
+        setKeyTitleDefaultValue(sliderPref, key, defaultValue);
         sliderPref.setValue(HGBaseConfig.getInt(key, defaultValue));
         return sliderPref;
     }
@@ -346,7 +369,7 @@ final public class HGBaseConfigTools {
      */
     public static HGBaseNumberPickerPreference createNumberPickerPreference(PreferenceActivity activity, String key, int minValue, int maxValue, int diff, int defaultValue, boolean showPickedValue) {
         HGBaseNumberPickerPreference pickerPref = new HGBaseNumberPickerPreference(activity, minValue, maxValue, diff, showPickedValue);
-        setKeyTitleDefaultValue(pickerPref, key, Integer.valueOf(defaultValue));
+        setKeyTitleDefaultValue(pickerPref, key, defaultValue);
         pickerPref.setValue(HGBaseConfig.getInt(key, defaultValue));
         return pickerPref;
     }

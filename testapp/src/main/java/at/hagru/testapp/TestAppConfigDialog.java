@@ -11,7 +11,9 @@ import at.hagru.hgbase.gui.config.HGBaseConfigStateDialog;
 import at.hagru.hgbase.gui.config.HGBaseConfigTools;
 import at.hagru.hgbase.gui.config.HGBaseNumberPickerPreference;
 import at.hagru.hgbase.gui.config.HGBaseSliderPreference;
+import at.hagru.hgbase.gui.config.HGBaseSoundListPreference;
 import at.hagru.hgbase.lib.HGBaseLog;
+import at.hagru.hgbase.lib.HGBaseSound;
 import at.hagru.hgbase.lib.HGBaseTools;
 
 /**
@@ -38,6 +40,8 @@ public class TestAppConfigDialog extends HGBaseConfigStateDialog {
         addPreference(picker);
         SwitchPreference onOff = HGBaseConfigTools.createSwitchPreference(this, "config_onoff", false);
         addPreference(onOff);
+        HGBaseSoundListPreference soundList = HGBaseConfigTools.createSoundListPreference(this, "config_sound", new String[]{"sound1", "sound2", "sound3"}, "sound2", true, soundName -> HGBaseSound.playAudio("sounds/" + soundName + ".wav"));
+        addPreference(soundList);
     }
 
     @Override

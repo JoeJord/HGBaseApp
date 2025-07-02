@@ -17,6 +17,7 @@ import at.hagru.hgbase.gui.HGBaseGuiTools;
 import at.hagru.hgbase.lib.HGBaseConfig;
 import at.hagru.hgbase.lib.HGBaseText;
 import at.hagru.hgbase.lib.HGBaseTools;
+import at.hagru.hgbase.lib.SoundPlayer;
 
 /**
  * Utility class to create configuration/preference elements.
@@ -215,6 +216,28 @@ public final class HGBaseConfigTools {
         return list;
     }
 
+    /**
+     * Creates a list preference to select a sound.
+     *
+     * @param activity          The preference activity.
+     * @param key               The key of the new preference.
+     * @param sounds            A list of sound names that can be selected.
+     * @param defaultValue      The default value.
+     * @param showSelectedValue If {@code true} the selected value will be shown in the summary.
+     * @param soundPlayer       The player to play the selected sound.
+     * @return The created preference.
+     */
+    public static HGBaseSoundListPreference createSoundListPreference(PreferenceActivity activity, String key, String[] sounds, String defaultValue, boolean showSelectedValue, SoundPlayer soundPlayer) {
+        HGBaseSoundListPreference list = new HGBaseSoundListPreference(activity, soundPlayer);
+        setKeyTitleDefaultValue(list, key, defaultValue);
+        list.setEntryValues(sounds);
+        list.setEntries(generateListEntries(sounds));
+        list.setValue(HGBaseConfig.get(key, defaultValue));
+        if (showSelectedValue) {
+            list.setSummary("%s");
+        }
+        return list;
+    }
 
     /**
      * Create a number preference that holds numbers.

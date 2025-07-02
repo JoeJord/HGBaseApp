@@ -14,5 +14,10 @@
     <string name="config_picker">A number picker</string>
     <string name="config_onoff">Switch on and off</string>
     <string name="color_dialog">Color Dialog</string>
-    
+    <string name="config_sound">A sound list</string>
+
+    <string name="sound1">Sound 1</string>
+    <string name="sound2">Sound 2</string>
+    <string name="sound3">Sound 3</string>
+
 </resources>

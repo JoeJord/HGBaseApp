@@ -24,5 +24,6 @@
     <string name="select_color">Select a color</string>
     <string name="select_no_color">No color</string>
     <string name="progress_wait">Please wait&#8230;</string>
-    
+    <string name="play_sound">Play sound</string>
+
 </resources>

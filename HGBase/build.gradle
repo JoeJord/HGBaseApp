@@ -3,6 +3,9 @@ plugins {
     id 'maven-publish'
 }
 
+group = 'at.hagru.hgbase'
+version = '0.98'
+
 android {
     namespace 'at.hagru.hgbase'
     compileSdk 36

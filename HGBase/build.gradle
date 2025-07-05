@@ -50,8 +50,4 @@ publishing {
             version = '0.99'
         }
     }
-
-    repositories {
-        mavenLocal()
-    }
 }

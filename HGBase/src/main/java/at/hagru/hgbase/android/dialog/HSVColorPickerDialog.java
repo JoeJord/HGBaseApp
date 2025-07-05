@@ -18,6 +18,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import at.hagru.hgbase.R;
+
 /**
  * Taken from: https://github.com/jesperborgstrup/buzzingandroid
  * 
@@ -64,7 +66,7 @@ public class HSVColorPickerDialog extends AlertDialog {
 			}
 		} );
 		colorWheel.setColor( initialColor );
-		colorWheel.setId( 1 );
+		colorWheel.setId( R.id.color_wheel);
 		layout.addView( colorWheel, lp );
 		
 		int selectedColorHeight = (int) (context.getResources().getDisplayMetrics().density * SELECTED_COLOR_HEIGHT_DP);
@@ -72,7 +74,7 @@ public class HSVColorPickerDialog extends AlertDialog {
 		FrameLayout valueSliderBorder = new FrameLayout( context );
 		valueSliderBorder.setBackgroundColor( BORDER_COLOR );
 		valueSliderBorder.setPadding( borderSize, borderSize, borderSize, borderSize );
-		valueSliderBorder.setId( 2 );
+		valueSliderBorder.setId( R.id.value_slider );
 		lp = new RelativeLayout.LayoutParams( LayoutParams.MATCH_PARENT, selectedColorHeight + 2 * borderSize );
 		lp.bottomMargin = (int) (context.getResources().getDisplayMetrics().density * CONTROL_SPACING_DP);
 		lp.addRule( RelativeLayout.BELOW, 1 );

@@ -1,5 +1,6 @@
 package at.hagru.hgbase.android;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -89,7 +90,8 @@ public final class HGBaseAdvertisements {
 	closeIcon.setImageResource(R.drawable.close);
 	closeIcon.setBackgroundColor(Color.TRANSPARENT);
 	closeIcon.setOnClickListener(new OnClickListener() {
-	    @Override
+	    @SuppressLint("RestrictedApi")
+        @Override
 	    public void onClick(View v) {
 		mainFrame.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
 		mainFrame.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));

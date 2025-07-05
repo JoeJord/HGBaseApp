@@ -163,7 +163,7 @@ public final class HGBaseAppTools {
 	    ContentResolver contentResolver = getContext().getContentResolver();
     	Cursor c = contentResolver.query(dataUri, projection, null, null, null);
 		if (c.moveToNext()) {
-			String name = c.getString(c.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME));
+			String name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Profile.DISPLAY_NAME));
 			if (HGBaseTools.hasContent(name)) {
 			    return name;
 			}

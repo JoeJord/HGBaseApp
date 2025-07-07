@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'at.hagru.hgbase'
-version = '0.99d'
+version = '0.99e'
 
 android {
     namespace 'at.hagru.hgbase'
@@ -52,7 +52,7 @@ publishing {
 
             groupId = 'at.hagru.hgbase'
             artifactId = 'hgbase-library'
-            version = '0.99d'
+            version = '0.99e'
         }
     }
 }

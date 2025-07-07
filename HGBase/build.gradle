@@ -40,10 +40,14 @@ dependencies {
 
 publishing {
     publications {
-        mavenRelease(MavenPublication) {
-            if (components.findByName("release") != null) {
-                from components.release
-            }
+        release(MavenPublication) {
+            afterEvaluate {
+                def releaseComponent = components.findByName("release")
+                if (releaseComponent != null) {
+                    from releaseComponent
+                } else {
+                    println("WARNUNG: Keine 'release'-Komponente gefunden!")
+                }            }
 
             groupId = 'at.hagru.hgbase'
             artifactId = 'hgbase-library'

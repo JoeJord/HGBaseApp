@@ -45,13 +45,11 @@ publishing {
             artifactId = 'hgbase-library'
             version = '0.99f'
 
-            afterEvaluate {
-                def releaseComponent = components.findByName("release")
-                if (releaseComponent != null) {
-                    from releaseComponent
-                } else {
-                    println("WARNUNG: Keine 'release'-Komponente gefunden!")
-                }
+            def releaseComponent = components.findByName("release")
+            if (releaseComponent != null) {
+                from releaseComponent
+            } else {
+                println("WARNUNG: Keine 'release'-Komponente gefunden!")
             }
         }
     }

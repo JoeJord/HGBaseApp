@@ -37,28 +37,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
-
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.github.JoeJord'
-            artifactId = 'hgbase-library'
-            version = '0.99f'
-        }
-    }
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                def releaseComponent = components.findByName("release")
-                if (releaseComponent != null) {
-                    from releaseComponent
-                } else {
-                    println("WARNUNG: Keine 'release'-Komponente gefunden!")
-                }
-            }
-        }
-    }
-}

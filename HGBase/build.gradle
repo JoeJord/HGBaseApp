@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'at.hagru.hgbase'
+group = 'com.github.JoeJord'
 version = '0.99f'
 
 android {

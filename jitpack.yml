@@ -2,4 +2,8 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew assembleRelease
+  - ./gradlew clean assembleRelease --rerun-tasks
+
+artifacts:
+  - path: HGBase/build/outputs/aar/HGBase-release.aar
+    type: aar

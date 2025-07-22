@@ -5,12 +5,12 @@ plugins {
 version = '0.99f'
 
 android {
-    namespace 'at.hagru.hgbase'
-    compileSdk 36
+    namespace = 'at.hagru.hgbase'
+    compileSdk = 36
 
     defaultConfig {
-        minSdk 24
-        targetSdk 36
+        minSdk = 24
+        targetSdk = 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

@@ -1,4 +1,6 @@
 jdk:
   - openjdk17
-install:
-  - ./gradlew clean build --stacktrace --no-daemon
+
+build:
+  gradle:
+    - ./gradlew assembleRelease

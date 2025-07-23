@@ -1,9 +1,6 @@
 plugins {
     id 'com.android.library'
-    id 'maven-publish'
 }
-
-version = '0.99f'
 
 android {
     namespace = 'at.hagru.hgbase'
@@ -12,6 +9,8 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 36
+        versionCode 100
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

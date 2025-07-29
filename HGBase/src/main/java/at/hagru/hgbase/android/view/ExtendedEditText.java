@@ -3,8 +3,7 @@ package at.hagru.hgbase.android.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-
-import androidx.appcompat.widget.AppCompatEditText;
+import android.widget.EditText;
 
 /**
  * An extended text field that has overwritten some methods and allows more listeners.<p>
@@ -12,7 +11,7 @@ import androidx.appcompat.widget.AppCompatEditText;
  * 
  * @author hagru
  */
-public class ExtendedEditText extends AppCompatEditText {
+public class ExtendedEditText extends EditText {
 	
 	private OnKeyPreImeListener keyPreImeListener;
 

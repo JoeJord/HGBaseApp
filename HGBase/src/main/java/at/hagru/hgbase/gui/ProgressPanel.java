@@ -8,8 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
-
-import androidx.appcompat.widget.AppCompatTextView;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +19,7 @@ import at.hagru.hgbase.android.awt.Color;
  * A panel that is able to show a progress.
  * 
  */
-public class ProgressPanel extends AppCompatTextView {
+public class ProgressPanel extends TextView {
 
     protected static final int COLOR_FINISH = Color.GREEN.getColorCode();
 

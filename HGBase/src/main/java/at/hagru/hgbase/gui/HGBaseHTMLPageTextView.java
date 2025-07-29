@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-
-import androidx.appcompat.widget.AppCompatTextView;
+import android.widget.TextView;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -18,7 +17,7 @@ import at.hagru.hgbase.lib.HGBaseFileTools;
  * 
  * @author hagru
  */
-public class HGBaseHTMLPageTextView extends AppCompatTextView {
+public class HGBaseHTMLPageTextView extends TextView {
 	
 	private static final int DEFAULT_TEXT_SIZE = 14;
 	

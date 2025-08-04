@@ -32,7 +32,14 @@ public class HGBaseSoundListPreference extends ListPreference {
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        view.findViewById(R.id.play_button).setOnClickListener(v -> playSound(getValue()));
+        view.findViewById(R.id.play_button).setOnClickListener(v -> onPlayButtonClicked());
+    }
+
+    /**
+     * Handles a click on the play button.
+     */
+    protected void onPlayButtonClicked() {
+        playSound(getValue());
     }
 
     /**
@@ -40,7 +47,7 @@ public class HGBaseSoundListPreference extends ListPreference {
      *
      * @param soundName The name of the sound to play.
      */
-    private void playSound(String soundName) {
+    protected void playSound(String soundName) {
         if (soundPlayer == null || !HGBaseTools.hasContent(soundName)) {
             return;
         }

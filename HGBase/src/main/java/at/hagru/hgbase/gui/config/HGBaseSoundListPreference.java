@@ -20,7 +20,8 @@ public class HGBaseSoundListPreference extends ListPreference {
     /**
      * Constructs a new instance.
      *
-     * @param context The context for the preference.
+     * @param context     The context for the preference.
+     * @param soundPlayer The player which is used to play the sound.
      */
     public HGBaseSoundListPreference(Context context, SoundPlayer soundPlayer) {
         super(context);

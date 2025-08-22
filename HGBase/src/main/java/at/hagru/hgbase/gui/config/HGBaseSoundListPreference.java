@@ -32,7 +32,9 @@ public class HGBaseSoundListPreference extends ListPreference {
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        view.findViewById(R.id.play_button).setOnClickListener(v -> onPlayButtonClicked());
+        View playButton = view.findViewById(R.id.play_button);
+        playButton.setOnClickListener(v -> onPlayButtonClicked());
+        playButton.setEnabled(true); // The play button should always be enabled - even if the preference itself is disabled.
     }
 
     /**

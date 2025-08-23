@@ -1004,6 +1004,20 @@ public final class HGBaseTools {
     }
 
     /**
+     * Returns a randomly picked element from the specified array or {@code null} if the array is {@code null} or empty.
+     *
+     * @param <T>   The type of the elements in the array.
+     * @param array The array.
+     * @return A randomly picked element from the specified array or {@code null} if the array is {@code null} or empty.
+     */
+    public static <T> T pickRandomElement(T[] array) {
+        if ((array == null) || (array.length == 0)) {
+            return null;
+        }
+        return array[random.nextInt(array.length)];
+    }
+
+    /**
      * Returns a randomly picked element from the specified list or {@code null} if the list is {@code null} or empty.
      *
      * @param list   The list.
